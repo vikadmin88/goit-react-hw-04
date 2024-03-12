@@ -1,5 +1,7 @@
 # React + Vite
+
 ## goit-react-hw-04
+
 ### API Unsplash ImageGallery, React Hot Toast, react-loader-spinner, React Modal.
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
