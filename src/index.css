@@ -61,3 +61,13 @@ button {
 address {
   font-style: normal;
 }
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1440px;
+  width: 100%;
+  padding-top: 55px;
+  margin: 0 auto;
+}
