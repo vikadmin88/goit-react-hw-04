@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import ImageCard from './ImageCard/ImageCard'
 import css from './ImageGallery.module.css'
 // TODO remove nano
-import { nanoid } from 'nanoid'
+// import { nanoid } from 'nanoid'
 
 //eslint-disable-next-line react/display-name
 const ImageGallery = forwardRef(({ openModal, collection }, ref) => {
@@ -11,8 +11,8 @@ const ImageGallery = forwardRef(({ openModal, collection }, ref) => {
       {
         collection.map((item) => (
           // TODO replace to item.id
-          // <li key={item.id}>
-          <li key={nanoid()}>
+          // <li key={nanoid()}>
+          <li key={item.id}>
             <ImageCard openModal={openModal} item={item} />
           </li>
         ))

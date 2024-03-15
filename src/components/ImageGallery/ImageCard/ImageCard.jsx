@@ -1,5 +1,7 @@
 import css from './ImageCard.module.css'
 
+
+// TODO uncomment this remove pixabu
 const ImageCard = ({ item: { id, urls, alt_description, description }, openModal }) => {
 
     return (
@@ -8,5 +10,14 @@ const ImageCard = ({ item: { id, urls, alt_description, description }, openModal
         </div>
     )
 }
+
+// const ImageCard = ({ item: { id, webformatURL, tags }, openModal }) => {
+
+//     return (
+//         <div className={css.imgContainer} onClick={() => openModal(id)}>
+//             <img src={webformatURL} alt={tags} className={css.img}/>
+//         </div>
+//     )
+// }
 
 export default ImageCard
