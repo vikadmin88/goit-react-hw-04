@@ -1,8 +1,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import toast, { Toaster } from 'react-hot-toast';
-// TODO remove test functions
-import { requestImagesByQuery, requestImageById, requestImagesByQueryPixabu, requestImagesByQueryTest, requestImageByIdTest } from "../../services/api";
+import { requestImagesByQuery, requestImageById } from "../../services/api";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Loader from "../Loader/Loader";
 import SearchBar from '../SearchBar/SearchBar';
@@ -32,22 +31,15 @@ const App = () => {
         setIsError(false);
         setShowMoreBtn(false);
   
-        // TODO remove test func
         const data = await requestImagesByQuery({ page, query });
-        // const data = await requestImagesByQueryPixabu({ page, query });
-        // const data = await requestImagesByQueryTest({ page, query });
         if (data.results) {
-        // if (data.hits) {
           if (page == 1) {
             setImgCollection(data.results);
-            // setImgCollection(data.hits);
           } else {
             setImgCollection(prev => [...prev, ...data.results]);
-            // setImgCollection(prev => [...prev, ...data.hits]);
           }
   
           if (data.total_pages && data.total_pages > page) {
-          // if (data.totalHits && data.totalHits > page * 12) {
             setShowMoreBtn(true);
           } else {
             toast.success('There are no more images.');
@@ -97,10 +89,7 @@ const App = () => {
       try {
         setIsError(false);
   
-        // TODO remove test func
         const data = await requestImageById(imgId.current);
-        // const data = await requestImageByIdPixabu(imgId.current);
-        // const data = await requestImageByIdTest(imgId.current);
         if (data) {
           setImgItem(data);
         }
