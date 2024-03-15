@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import toast, { Toaster } from 'react-hot-toast';
-import { requestImagesByQuery, requestImageById } from "../../services/api";
+import { requestImagesByQuery } from "../../services/api";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Loader from "../Loader/Loader";
 import SearchBar from '../SearchBar/SearchBar';
@@ -20,7 +20,6 @@ const App = () => {
   const [page, setPage] = useState(1);
   const ulRef = useRef(null);
   const [imgItem, setImgItem] = useState({});
-  const imgId = useRef(null);
 
   useEffect(() => {
     if (!query) return;
@@ -31,7 +30,7 @@ const App = () => {
         setIsError(false);
         setShowMoreBtn(false);
   
-        const data = await requestImagesByQuery({ page, query });
+        const data = await requestImagesByQuery({ page, query, perPage: 12 });
         if (data.results) {
           if (page == 1) {
             setImgCollection(data.results);
@@ -63,16 +62,20 @@ const App = () => {
 
 
   const onSearchHandler = (searchQuery) => {
-    if (!searchQuery) {
-      toast.success('The search field must be filled in!', { iconTheme: { primary: '#713200', secondary: '#FFFAEE', }, });
-    } else {
+    if (searchQuery) {
       setQuery(searchQuery);
       setPage(1);
+    } else {
+      toast.success('The search field must be filled in!', { iconTheme: { primary: '#713200', secondary: '#FFFAEE', }, });
     }
   }
 
   const onLoadMoreHandler = () => {
-    setPage(page + 1);
+    if (query) {
+      setPage(page + 1);
+    } else {
+      toast.success('The search field must be filled in!', { iconTheme: { primary: '#713200', secondary: '#FFFAEE', }, });
+    }
   }
 
   useEffect(() => {
@@ -82,36 +85,12 @@ const App = () => {
   }, [imgCollection]);
 
 
-  useEffect(() => {
-    if (!isOpenModal) return;
-
-    async function fetchDataByQuery() {
-      try {
-        setIsError(false);
-  
-        const data = await requestImageById(imgId.current);
-        if (data) {
-          setImgItem(data);
-        }
-    
-      } catch (err) {
-        console.log(err);
-        setIsError(true);
-        toast.error(`Network error: ${err}`);
-      }
-    }
-  
-    fetchDataByQuery();
-
-  }, [isOpenModal]);
-
-  const openModal = (id) => {
-    imgId.current = id;
+  const openModal = (imgUrl, imgAlt, imgDescr) => {
+    setImgItem({imgUrl, imgAlt, imgDescr});
     setIsOpenModal(true);
   }
 
   const closeModal = () => {
-    imgId.current = null;
     setImgItem({});
     setIsOpenModal(false);
   }
@@ -122,8 +101,8 @@ const App = () => {
       <SearchBar onSearchHandler={onSearchHandler} />
       {isError && <ErrorMessage />}
       <ImageGallery ref={ulRef} openModal={openModal} collection={imgCollection} />
-      {isLoading && <Loader />}
-      {showMoreBtn && <LoadMoreBtn onLoadMoreHandler={onLoadMoreHandler} />}
+      {!isError && isLoading && <Loader />}
+      {!isLoading && showMoreBtn && <LoadMoreBtn onLoadMoreHandler={onLoadMoreHandler} />}
       <ImageModal imgItem={imgItem} isOpenModal={isOpenModal} closeModal={closeModal} />
     </>
   )

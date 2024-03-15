@@ -25,6 +25,7 @@
 .searchIcon {
     border: none;
     position: absolute;
+    background-color: inherit;
     top: 50%;
     transform: translateY(-50%);
     left: 9px;

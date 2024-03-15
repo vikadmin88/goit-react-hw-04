@@ -3,10 +3,7 @@ import css from './ImageModal.module.css'
 
 Modal.setAppElement('#root');
 
-const ImageModal = ({ imgItem, isOpenModal, closeModal }) => {
-    const imgUrl = imgItem.urls ? imgItem.urls.regular : '';
-    const imgDescr = imgItem.description ?? '';
-    const imgAlt = imgItem.alt_description ?? '';
+const ImageModal = ({ imgItem: {imgUrl, imgAlt, imgDescr}, isOpenModal, closeModal }) => {
 
     return (
         <Modal
@@ -20,7 +17,7 @@ const ImageModal = ({ imgItem, isOpenModal, closeModal }) => {
                     <span className={css.descr}>{imgDescr}</span>
                     <button  className={css.btn} onClick={closeModal}>X</button>
                 </div>
-                <img src={imgUrl} alt={imgAlt} className={css.img}/>
+                <img src={imgUrl} alt={imgAlt} title={imgDescr} className={css.img}/>
             </div>
         </Modal>
     );
