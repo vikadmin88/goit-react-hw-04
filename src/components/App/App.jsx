@@ -32,11 +32,7 @@ const App = () => {
   
         const data = await requestImagesByQuery({ page, query, perPage: 12 });
         if (data.results) {
-          if (page == 1) {
-            setImgCollection(data.results);
-          } else {
             setImgCollection(prev => [...prev, ...data.results]);
-          }
   
           if (data.total_pages && data.total_pages > page) {
             setShowMoreBtn(true);
