@@ -10,7 +10,8 @@ const SearchBar = ({ onSearchHandler }) => {
         <Formik
         initialValues={{ query: "" }}
         onSubmit={(values) => {
-          if (!values.query) {
+          const query = values.query.trim();
+          if (!query) {
             toast.success('The search field must be filled in!', { iconTheme: { primary: '#713200', secondary: '#FFFAEE', }, });
             return;
           }

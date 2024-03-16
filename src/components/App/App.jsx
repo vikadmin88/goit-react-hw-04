@@ -62,20 +62,14 @@ const App = () => {
 
 
   const onSearchHandler = (searchQuery) => {
-    if (searchQuery) {
-      setQuery(searchQuery);
-      setPage(1);
-    } else {
-      toast.success('The search field must be filled in!', { iconTheme: { primary: '#713200', secondary: '#FFFAEE', }, });
-    }
+    if (searchQuery === query) return;
+    setImgCollection([]);
+    setQuery(searchQuery);
+    setPage(1);
   }
 
   const onLoadMoreHandler = () => {
-    if (query) {
       setPage(page + 1);
-    } else {
-      toast.success('The search field must be filled in!', { iconTheme: { primary: '#713200', secondary: '#FFFAEE', }, });
-    }
   }
 
   useEffect(() => {
